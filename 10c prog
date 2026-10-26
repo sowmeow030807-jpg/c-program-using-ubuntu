@@ -1,0 +1,50 @@
+#include <stdio.h>
+
+int id[20], ex[20], n=0, N;
+
+void access(int i,int e){
+    for(int k=0;k<n;k++)
+        if(id[k]==i){
+            printf("Hit\n");
+            return;
+        }
+
+    printf("Fault ");
+
+    if(n<N){
+        id[n]=i;
+        ex[n]=e;
+        n++;
+    }
+    else{
+        int m=0;
+
+        for(int k=1;k<n;k++)
+            if(ex[k]<ex[m])
+                m=k;
+
+        printf("Evict %d ",id[m]);
+        id[m]=i;
+        ex[m]=e;
+    }
+
+    for(int k=0;k<n;k++)
+        printf("[%d,%d] ",id[k],ex[k]);
+
+    printf("\n");
+}
+
+int main(){
+ int r,i,e;
+
+    printf("Enter number of frames: ");
+    scanf("%d",&N);
+
+    printf("Enter number of page requests: ");
+    scanf("%d",&r);
+
+    for(int k=0;k<r;k++){
+        scanf("%d %d",&i,&e);
+        access(i,e);
+    }
+}
